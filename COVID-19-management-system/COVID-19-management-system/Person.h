@@ -19,14 +19,14 @@ protected:
 	string email;
 	Address address;
 	std::list<LabTest> testList;
-	string sourceSick;
+	Person* sourceSick;
 	bool sick;
 
 public:
-	Person(string name, string lastName, string phone, string sourceSick);
+	Person(string name, string lastName, string phone, Person* sourceSick);
 
 	Person(string name, string lastName, string phone, string ID, string birthDate,
-		string email, string city, string street, int houseNumber, int apartment, int houseResidents = 1, string sourceSick = "0");
+		string email, string city, string street, int houseNumber, int apartment, int houseResidents = 1, Person* sourceSick = nullptr);
 
 	void deleteLabTest(LabTest* labtest);
 
@@ -43,7 +43,7 @@ public:
 
 	string getPhone() const { return phone; }
 
-	string getSourceSick() const { return sourceSick; }
+	string getSourceSick() const { return sourceSick->getID(); }
 
 	void setBirthdate(string date) { birthDate = date; }
 
