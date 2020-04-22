@@ -40,7 +40,7 @@ void Manager::checkAndRunCommand(string cmd) throw()
 {
 	size_t i = cmd.find(' ');
 	if (i == string::npos)
-		i = cmd.length() - 1;
+		i = cmd.length();
 
 	string titleOfCommand = cmd.substr(0, i); //cut the title of command
 	i++; //now i is after the ' ' if exists
@@ -74,7 +74,7 @@ void Manager::checkAndRunCommand(string cmd) throw()
 	}
 	else if (titleOfCommand == "Show-sick-encounter")
 	{
-
+		personManage.showSickEncounter();
 	}
 	else if (titleOfCommand == "Update-sick-encounter-details")
 	{

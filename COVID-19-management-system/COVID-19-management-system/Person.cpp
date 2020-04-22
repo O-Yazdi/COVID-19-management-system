@@ -2,7 +2,7 @@
 #include<iostream>
 
 
-Person::Person(string name, string lastName, string phone, string sourceSick) : name(name), lastName(lastName), phone(phone), sourceSick(sourceSick)
+Person::Person(string name, string lastName, string phone, Person* sourceSick) : name(name), lastName(lastName), phone(phone), sourceSick(sourceSick)
 {
 	ID = "null";
 	email = "null";
@@ -10,7 +10,7 @@ Person::Person(string name, string lastName, string phone, string sourceSick) : 
 }
 
 Person::Person(string name, string lastName, string phone, string ID, string birthDate,
-	string email, string city, string street, int houseNumber, int apartment, int houseResidents, string sourceSick)
+	string email, string city, string street, int houseNumber, int apartment, int houseResidents, Person* sourceSick)
 	: name(name), lastName(lastName), phone(phone), ID(ID), birthDate(birthDate), email(email),
 	address(city, street, houseNumber, apartment, houseResidents)
 {
@@ -79,6 +79,6 @@ std::ostream& operator<<(std::ostream& os, const Person& p)
 {
 	os << "\nPerson details id: " << p.ID << "\nfirst name: " << p.name << "\nlast name: " << p.lastName <<
 		"\nis sick: "<< ((p.sick) ? "true" : "false")<<"\nbirthdate: "<< p.birthDate << "\nphone: "
-		<< p.phone << "\nmail: " << p.email <<"\n"<< p.address<< "\nsource sick: " << p.sourceSick;
+		<< p.phone << "\nmail: " << p.email <<"\n"<< p.address<< "\nsource sick: " << p.sourceSick->getID();
 	return os;
 }

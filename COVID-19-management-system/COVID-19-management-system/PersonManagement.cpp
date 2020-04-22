@@ -278,13 +278,26 @@ void PersonManagement::addSickEncounter(string param)
 		throw string("no match param for 'Add-sick-encounter' command!");
 	string phone = param.substr(i);
 
-	Encounter* encounter = new Encounter(firstname, lastname, phone, id);
+	Encounter* encounter = new Encounter(firstname, lastname, phone, person);
 
 	personList.push_back(encounter);
 
 	((Sick*)(person))->addSickEncounter(*encounter);
 
 	std::cout << "Add-sick-encounter: name " << firstname << " added to sick ID: " + id + " successfully\n";
+}
+
+void PersonManagement::showSickEncounter()
+{
+	for (auto i : personList)
+	{
+		if(i->getType() == "Encounter")
+			if (!((Encounter*)i)->isfullDetails())
+			{
+				((Encounter*)i)->showEncounter();
+				std::cout << "\n";
+			}
+	}
 }
 
 void PersonManagement::updateSickEncounter(string param)
