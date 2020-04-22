@@ -79,6 +79,7 @@ std::ostream& operator<<(std::ostream& os, const Person& p)
 {
 	os << "\nPerson details id: " << p.ID << "\nfirst name: " << p.name << "\nlast name: " << p.lastName <<
 		"\nis sick: "<< ((p.sick) ? "true" : "false")<<"\nbirthdate: "<< p.birthDate << "\nphone: "
-		<< p.phone << "\nmail: " << p.email <<"\n"<< p.address<< "\nsource sick: " << p.sourceSick->getID();
+		<< p.phone << "\nmail: " << p.email <<"\n"<< p.address
+		<< "\nsource sick: " << ((p.sourceSick != nullptr) ? p.sourceSick->getID() : "0");
 	return os;
 }

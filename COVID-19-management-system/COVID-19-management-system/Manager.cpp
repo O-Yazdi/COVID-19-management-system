@@ -122,7 +122,7 @@ void Manager::checkAndRunCommand(string cmd) throw()
 	}
 	else if (titleOfCommand == "Show-help")
 	{
-
+		showHelp();
 	}
 	else
 	{
