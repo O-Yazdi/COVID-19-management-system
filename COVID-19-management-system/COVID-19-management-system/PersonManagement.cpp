@@ -8,7 +8,6 @@
 #define POSITIVE "positive"/*"true"*/
 #define NEGATIVE "negative"/*"false"*/
 
-int PersonManagement::itToNewSick = 0;
 
 Person* PersonManagement::findPersonByID(string id) const
 {
@@ -605,17 +604,13 @@ void PersonManagement::updateLabTest(string labid, string testid, string personi
 void PersonManagement::showNewSick() const
 {
 	std::list<Person*>::const_iterator it = personList.begin();
-	for (int i = 0; i < itToNewSick; i++)
-	{
-		it++;
-	}
 	std::cout << "\n** LIST OF THE NEW SICK:**\n";
 	for (it; it != personList.end(); it++)
 	{
-		if ((*it)->getType() == "Sick")
+		if ((*it)->getType() == "Sick" and ((Sick*)(*it))->isNew)
 		{
 			std::cout << *(*it)<<"\n";
-			itToNewSick++;
+			((Sick*)(*it))->isNew = false;
 		}
 	}
 	std::cout << "\n** END LIST OF THE NEW SICK**\n\n";

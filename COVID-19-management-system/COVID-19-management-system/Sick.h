@@ -28,7 +28,7 @@ public:
 	{
 		return address.getCity();
 	}
-
+	bool isNew = true;
 	virtual string getType() const override
 	{
 		if (sick)
