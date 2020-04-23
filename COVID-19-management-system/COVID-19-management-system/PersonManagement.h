@@ -43,17 +43,26 @@ public:
 
 	void updateLabTest(string labid, string testid, string personid, string date, bool result);
 
-	void showNewSick();
+	void showNewSick() const;
 
-	void showStat(string somePARAM);
+	void showStat(string somePARAM) const;
 
-	void showPerson(string personid);
+	void showPerson(string personid) const;
 
-	void showPersonRoute(string personid);
+	void showPersonRoute(string personid) const;
 
-	void showSick();
+	void showSick() const;
 
-	void showIsolated();
+	int getCountSicks() const;
+
+	int getCountHealed() const;
+
+	void showIsolated() const;
+
+	int getCountIsolated() const;
+
+	void showSickPerCity() const;
+
 
 	~PersonManagement();
 };

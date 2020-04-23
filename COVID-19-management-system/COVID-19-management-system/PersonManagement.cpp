@@ -5,8 +5,8 @@
 #include<list>
 
 //define keywords for lab test results 
-#define POSITIVE "true"
-#define NEGATIVE "false"
+#define POSITIVE "positive"/*"true"*/
+#define NEGATIVE "negative"/*"false"*/
 
 int PersonManagement::itToNewSick = 0;
 
@@ -73,6 +73,7 @@ void PersonManagement::deleteLabTestInPerson(LabTest* lab)
 	for (auto i : personList)
 		i->deleteLabTest(lab);
 }
+
 std::list<LabTest*>::const_iterator PersonManagement::findTestLab(string labid, string testid)
 {
 	for (std::list<LabTest*>::const_iterator it = testList.begin(); it != testList.end(); it++)
@@ -432,7 +433,7 @@ PersonManagement::~PersonManagement()
 	}
 }
 
-void PersonManagement::showPerson(string personid)
+void PersonManagement::showPerson(string personid) const
 {
 	Person* person = findPersonByID(personid);
 	if (person == nullptr)
@@ -441,7 +442,7 @@ void PersonManagement::showPerson(string personid)
 	person->showPerson();
 }
 
-void PersonManagement::showPersonRoute(string personid)
+void PersonManagement::showPersonRoute(string personid) const
 {
 	Person* person = findPersonByID(personid);
 	if (person == nullptr)
@@ -450,7 +451,7 @@ void PersonManagement::showPersonRoute(string personid)
 	((Sick*)person)->showPersonRoute();
 }
 
-void PersonManagement::showSick()
+void PersonManagement::showSick() const
 {
 	std::cout << "\n** LIST OF SICK: **\n";
 	for (auto i : personList)
@@ -460,6 +461,84 @@ void PersonManagement::showSick()
 	}
 	std::cout << "\n** END LIST OF SICK **\n";
 }
+
+int PersonManagement::getCountSicks() const
+{
+	int numOfSick = 0;
+	for (auto i : personList)
+	{
+		if (i->getType() == "Sick")
+			numOfSick++;
+	}
+	return numOfSick;
+}
+
+int PersonManagement::getCountHealed() const
+{
+	int numOfHealed = 0;
+	for (auto i : personList)
+	{
+		if (i->getType() == "healed")
+			numOfHealed++;
+	}
+	return numOfHealed;
+}
+
+
+void PersonManagement::showIsolated() const
+{
+	int numOfIsolated = 0;
+	std::cout << "\n** LIST OF ISOLATED: **\n";
+	for (auto i : personList)
+	{
+		if (i->getType() == "Sick" or (i->getType() == "Encounter" and ((Encounter*)i)->isfullDetails()))
+			std::cout << (*i) << "\n";
+	}
+	std::cout << "\n** END LIST OF ISOLATED **\n";
+}
+
+int PersonManagement::getCountIsolated() const
+{
+	int numOfIsolated = 0;
+	for (auto i : personList)
+	{
+		if (i->getType() == "Sick" or (i->getType() == "Encounter" and ((Encounter*)i)->isfullDetails()))
+			numOfIsolated++;
+	}
+	return numOfIsolated;
+}
+
+void PersonManagement::showSickPerCity() const
+{
+	int numOfSick = 0;
+	std::multimap<string, int> cities;
+	for (auto i : personList)
+	{
+		if (i->getType() == "Sick")
+		{
+			numOfSick++;
+			bool isCityExist = false;
+			for (std::multimap<string, int>::iterator it = cities.begin(); it!= cities.end(); it++)
+			{
+				if (((Sick*)i)->getCity() == (*it).first)
+				{
+					((*it).second)++;
+					isCityExist = true;
+					break;
+				}
+			}
+			if(!isCityExist)
+				cities.insert({ ((Sick*)i)->getCity(), 1 });
+		}
+	}
+	for (auto k : cities)
+	{
+		std::cout << "in " << k.first << " there " << k.second << " sicks, that "
+			<<((k.second / ((double)numOfSick)) * 100) << "% of all sicks.\n";
+	}
+
+}
+
 
 void PersonManagement::updateLabTest(string param)
 {
@@ -523,9 +602,9 @@ void PersonManagement::updateLabTest(string labid, string testid, string personi
 	updateStatusPerson(person, result);
 }
 
-void PersonManagement::showNewSick()
+void PersonManagement::showNewSick() const
 {
-	std::list<Person*>::iterator it = personList.begin();
+	std::list<Person*>::const_iterator it = personList.begin();
 	for (int i = 0; i < itToNewSick; i++)
 	{
 		it++;
@@ -540,4 +619,56 @@ void PersonManagement::showNewSick()
 		}
 	}
 	std::cout << "\n** END LIST OF THE NEW SICK**\n\n";
+}
+
+void PersonManagement::showStat(string param) const
+{
+	size_t i = 0;
+	while (i < param.length())
+	{
+		i = param.find(", ");
+		if (i == string::npos)
+		{
+			i = param.length();
+		}
+		string statName = param.substr(0, i);
+		if (statName == "sicks")
+		{
+			std::cout << "\n**BEGIN STAT OF SICKS**\n"
+				<< "number of sicks is: " << getCountSicks() << "\n"
+				<< "** END STAT OF SICKS**\n";
+		}
+		else if (statName == "healed")
+		{
+			std::cout << "\n**BEGIN STAT OF HEALED**\n"
+				<< "number of healed is: " << getCountHealed() << "\n"
+				<< "** END STAT OF HEALED**\n";
+
+		}
+		else if (statName == "isolated")
+		{
+			std::cout << "\n**BEGIN STAT OF ISOLATED**\n"
+				<< "number of isolated is: " << getCountIsolated() << "\n"
+				<< "** END STAT OF ISOLATED**\n";
+
+		}
+		else if (statName == "sick-per-city")
+		{
+			std::cout << "\n**BEGIN STAT OF SICK-PER-CITY**\n";
+			showSickPerCity();
+			std::cout<< "\n** END STAT OF SICK-PER-CITY**\n";
+		}
+		else
+		{
+			throw string("Show-stat: statName: " + statName + " not valid!");
+		}
+
+		if (i <= param.length())
+			i = i + 2;
+		if (i >= param.length())
+			break;
+
+		param = param.substr(i);
+	}
+
 }

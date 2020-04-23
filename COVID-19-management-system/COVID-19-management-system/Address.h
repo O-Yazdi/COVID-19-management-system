@@ -15,6 +15,7 @@ private:
 public:
 	Address();
 	Address(string city, string street, int houseNumber, int apartment, int houseResident, string siteName = "home");
+	string getCity() const { return city; }
 	virtual void toOs(std::ostream& os) const override;
 };
 

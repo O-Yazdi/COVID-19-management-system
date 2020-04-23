@@ -24,12 +24,17 @@ public:
 
 	void showPersonRoute() const;
 
+	string getCity() const
+	{
+		return address.getCity();
+	}
+
 	virtual string getType() const override
 	{
 		if (sick)
 			return "Sick";
 		else
-			return "recover";
+			return "healed";
 	}
 
 	~Sick();

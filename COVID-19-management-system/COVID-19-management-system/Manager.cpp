@@ -96,7 +96,8 @@ void Manager::checkAndRunCommand(string cmd) throw()
 	}
 	else if (titleOfCommand == "Show-stat")
 	{
-
+		string param = cmd.substr(i);
+		personManage.showStat(param);
 	}
 	else if (titleOfCommand == "Show-person")
 	{
@@ -118,7 +119,7 @@ void Manager::checkAndRunCommand(string cmd) throw()
 	}
 	else if (titleOfCommand == "Show-isolated")
 	{
-
+		personManage.showIsolated();
 	}
 	else if (titleOfCommand == "Show-help")
 	{
