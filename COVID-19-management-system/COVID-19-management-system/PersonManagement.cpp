@@ -8,6 +8,7 @@
 #define POSITIVE "true"
 #define NEGATIVE "false"
 
+int PersonManagement::itToNewSick = 0;
 
 Person* PersonManagement::findPersonByID(string id) const
 {
@@ -449,6 +450,17 @@ void PersonManagement::showPersonRoute(string personid)
 	((Sick*)person)->showPersonRoute();
 }
 
+void PersonManagement::showSick()
+{
+	std::cout << "\n** LIST OF SICK: **\n";
+	for (auto i : personList)
+	{
+		if (i->getType() == "Sick")
+			std::cout << (*i)<<"\n";
+	}
+	std::cout << "\n** END LIST OF SICK **\n";
+}
+
 void PersonManagement::updateLabTest(string param)
 {
 	size_t i = param.find(' ');
@@ -509,4 +521,23 @@ void PersonManagement::updateLabTest(string labid, string testid, string personi
 	person->addLabTest(newLabTest);
 
 	updateStatusPerson(person, result);
+}
+
+void PersonManagement::showNewSick()
+{
+	std::list<Person*>::iterator it = personList.begin();
+	for (int i = 0; i < itToNewSick; i++)
+	{
+		it++;
+	}
+	std::cout << "\n** LIST OF THE NEW SICK:**\n";
+	for (it; it != personList.end(); it++)
+	{
+		if ((*it)->getType() == "Sick")
+		{
+			std::cout << *(*it)<<"\n";
+			itToNewSick++;
+		}
+	}
+	std::cout << "\n** END LIST OF THE NEW SICK**\n\n";
 }

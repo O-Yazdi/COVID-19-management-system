@@ -2,7 +2,7 @@
 #include<iostream>
 #include <fstream>
 
-#define YOUR_PATH "C:\\Users\\עתניאל\\Source\\Repos\\new-COVID-19-management-system\\cmd3.txt"
+#define YOUR_PATH "C:\\Users\\עתניאל\\Source\\Repos\\new-COVID-19-management-system\\cmd4.txt"
 
 void main()
 {

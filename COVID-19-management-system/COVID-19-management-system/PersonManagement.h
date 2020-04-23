@@ -6,6 +6,7 @@ class PersonManagement
 private:
 	std::list<Person*> personList;
 	std::list<LabTest*> testList;
+	static int itToNewSick;
 
 	Person* findPersonByID(string id) const;
 	Person* findEncounterId(string id) const;

@@ -92,7 +92,7 @@ void Manager::checkAndRunCommand(string cmd) throw()
 	}
 	else if (titleOfCommand == "Show-new-sick")
 	{
-
+		personManage.showNewSick();
 	}
 	else if (titleOfCommand == "Show-stat")
 	{
@@ -114,7 +114,7 @@ void Manager::checkAndRunCommand(string cmd) throw()
 	}
 	else if (titleOfCommand == "Show-sick")
 	{
-
+		personManage.showSick();
 	}
 	else if (titleOfCommand == "Show-isolated")
 	{
